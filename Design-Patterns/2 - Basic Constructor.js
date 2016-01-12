@@ -1,18 +1,42 @@
-function Person (name, gender) {
-  this.name = name;
-  this.gender = gender;
-}
+var testModule = (function() {
+  var private_counter, privateFunction;
+  
+  private_counter = 0;
+  
+  privateFunction = function () {
+    console.log('foo');
+  };
+  
+  return {
+    publicVar: 'foo',
+    publicFunction: function () {
+      console.log('This is a public function');
+    },
+    incrementCounter: function() {
+      private_counter++;
+    },
+    getCounter: function () {
+      return private_counter;
+    },
+    resetCounter: function () {
+      private_counter = 0;
+    }
+  };
+})();
 
-Person.prototype.sayName = function () {
-  return 'My name is ' + this.name;
-}
 
-Person.prototype.sayGender = function () {
-  return 'I am a ' + this.gender;
-}
+//Increment the counter
+testModule.incrementCounter();
+testModule.incrementCounter();
+testModule.incrementCounter();
+testModule.incrementCounter();
 
-var shoukath = new Person('Shoukath', 'Male');
+// Output the counter
+console.log(testModule.getCounter());
 
-console.log(shoukath.sayName());
+// Reset Counter
+testModule.resetCounter();
 
-console.log(shoukath.sayGender());
+console.log(testModule.getCounter());
+
+console.log(testModule.publicVar);
